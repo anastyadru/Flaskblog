@@ -19,15 +19,20 @@ class Article(db.Model):
 
 @app.route('/')
 @app.route('/home')
-def index(): #put application's code here
+def index():
     return render_template('index.html')
 
 @app.route('/about')
-def about(): #put application's code here
+def about():
     return render_template('about.html')
 
+@app.route('/posts')
+def posts():
+    articles = Article.query.order_by(Article.date).all()
+    return render_template('posts.html', article=articles)
+
 @app.route('/create-article', methods=['POST','GET'])
-def create_article(): #put application's code here
+def create_article():
     if request.method == 'POST':
         title = request.form['title']
         intro = request.form['intro']
